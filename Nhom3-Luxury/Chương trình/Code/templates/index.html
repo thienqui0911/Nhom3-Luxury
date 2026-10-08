@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Quiz</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+       
+        <h1>
+            Hệ thống trắc nghiệm kiến thức môn học
+        </h1>
+
+        <div class="card">
+
+            <h2>Tạo bài kiểm tra</h2>
+
+            <form action="/create-quiz" method="POST">
+
+                <label>Môn học</label>
+
+               <select name="subject" id="subject">
+                    <option value="">Chọn môn học</option>
+                    <option value="Hệ điều hành Android">Hệ điều hành Android</option>
+                    <option value="Cơ sở dữ liệu">Cơ sở dữ liệu</option>
+                    <option value="Lập trình .Net">Lập trình .Net</option>
+                </select>
+
+
+                <label for="chapter">Chương:</label>
+                <select name="chapter" id="chapter" required>
+                    <option value="">Chọn chương</option>
+                </select>
+
+
+                <script>
+                    const subjectSelect = document.getElementById("subject");
+                    const chapterSelect = document.getElementById("chapter");
+
+                    subjectSelect.addEventListener("change", function () {
+                        const subject = this.value;
+
+                        chapterSelect.innerHTML = "";
+
+                        if (subject === "Hệ điều hành Android") {
+                            chapterSelect.innerHTML = `
+                            <option value="Tất cả">Tất cả</option>
+                            <option value="Chương 1: Giới thiệu về hệ điều hành Android">
+                                Chương 1: Giới thiệu về hệ điều hành Android
+                            </option>
+
+                            <option value="Chương 2: Giới thiệu về công cụ Android Studio">
+                                Chương 2: Giới thiệu về công cụ Android Studio
+                            </option>
+
+                            <option value="Chương 3: Activity">
+                                Chương 3: Activity
+                            </option>
+
+                            <option value="Chương 4: Thiết kế giao diện">
+                                Chương 4: Thiết kế giao diện
+                            </option>
+
+                            <option value="Chương 5: View cơ bản">
+                                Chương 5: View cơ bản
+                            </option>
+
+                            <option value="Chương 6: Intent">
+                                Chương 6: Intent
+                            </option>
+
+                            <option value="Chương 7: View nâng cao">
+                                Chương 7: View nâng cao
+                            </option>
+
+                            <option value="Chương 8: Lưu trữ dữ liệu">
+                                Chương 8: Lưu trữ dữ liệu
+                            </option>
+                            `;
+                        }
+                        else if (subject === "Cơ sở dữ liệu") {
+                            chapterSelect.innerHTML = `
+                            <option value="Tất cả">Tất cả</option>
+                            <option value="Chương 1: Tổng quan về cơ sở dữ liệu">
+                                Chương 1: Tổng quan về cơ sở dữ liệu
+                            </option>
+                            <option value="Chương 2: Mô hình thực thể liên kết">
+                                Chương 2: Mô hình thực thể liên kết
+                            </option>
+                            <option value="Chương 3: Dữ liệu mô hình quan hệ">
+                                Chương 3: Dữ liệu mô hình quan hệ
+                            </option>
+                            <option value="Chương 4: Đại số quan hệ">
+                                Chương 4: Đại số quan hệ
+                            </option>
+                            <option value="Chương 5: Ngôn ngữ truy vấn SQL">
+                                Chương 5: Ngôn ngữ truy vấn SQL
+                            </option>
+                            <option value="Chương 6: Ràng buộc toàn vẹn">
+                                Chương 6: Ràng buộc toàn vẹn
+                            </option>
+                            `;
+                        }
+                        else if (subject === "Lập trình .Net") {
+                            chapterSelect.innerHTML = `
+                            <option value="Tất cả">Tất cả</option>
+                            <option value="Chương 1: Giới thiệu về .NET">
+                                Chương 1: Giới thiệu về .NET
+                            </option>
+
+                            <option value="Chương 2: Tổng quan lập trình C#">
+                                Chương 2: Tổng quan lập trình C#
+                            </option>
+
+                            <option value="Chương 3: Xây dựng lớp, các thành phần của lớp và lớp kế thừa">
+                                Chương 3: Xây dựng lớp, các thành phần của lớp và lớp kế thừa
+                            </option>
+
+                            <option value="Chương 4: Giới thiệu Windows Forms, các Control cơ bản và Control nâng cao">
+                                Chương 4: Giới thiệu Windows Forms, các Control cơ bản và Control nâng cao
+                            </option>
+
+                            <option value="Chương 5: Giới thiệu LINQ, các toán tử truy vấn trong LINQ và LINQ to SQL">
+                                Chương 5: Giới thiệu LINQ, các toán tử truy vấn trong LINQ và LINQ to SQL
+                            </option>
+                            `;
+                        }
+                    });
+                </script>
+                <label>Loại kiến thức</label>
+
+                <select name="knowledge_type">
+                    <option value="Tất cả">Tất cả</option>
+                    <option value="Khái niệm">Khái niệm</option>
+                    <option value="Định lý">Định lý</option>
+                    <option value="Tính chất">Tính chất</option>
+                    <option value="Bài tập">Bài tập</option>
+                </select>
+
+
+                <label>Số câu hỏi</label>
+
+                <input type="number"
+                       name="number_questions"
+                       value="10"
+                       min="1">
+
+
+        
+                <label for="time_limit">Thời gian làm bài:</label>
+
+                <select name="time_limit" id="time_limit">
+                    <option value="5">5 phút</option>
+                    <option value="10">10 phút</option>
+                    <option value="15">15 phút</option>
+                    <option value="20">20 phút</option>
+                    <option value="30">30 phút</option>
+                    <option value="45">45 phút</option>
+                    <option value="60">60 phút</option>
+                </select>
+                <label>Độ khó</label>
+
+                <select name="difficulty">
+                    <option value="Mặc định">Mặc định</option>
+                    <option value="Dễ">Dễ</option>
+                    <option value="Trung bình">Trung bình</option>
+                    <option value="Khó">Khó</option>
+                </select>
+
+
+                <button type="submit">
+                    Tạo bài kiểm tra
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

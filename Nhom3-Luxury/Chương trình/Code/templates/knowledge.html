@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Theo dõi kiến thức - AI Quiz</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="knowledge-page">
+
+        <div class="knowledge-container">
+
+            <!-- HEADER -->
+            <div class="knowledge-header">
+
+                <h1>Theo dõi kiến thức</h1>
+
+                <p>
+                    Tổng hợp kết quả của bạn qua nhiều bài kiểm tra
+                </p>
+
+            </div>
+
+
+            <!-- DANH SÁCH MÔN HỌC -->
+            {% if knowledge_data %}
+
+                {% for item in knowledge_data %}
+
+                <div class="knowledge-item">
+
+                    <div class="knowledge-title">
+                        <span>{{ item.subject }}</span>
+                        <strong>{{ item.percentage }}%</strong>
+                    </div>
+
+                    <div class="knowledge-progress">
+                        <div class="knowledge-progress-bar"
+                            style="width: {{ item.percentage }}%;">
+                        </div>
+                    </div>
+
+                    <div class="knowledge-bottom">
+
+                        <p>
+                            Đúng {{ item.correct }} / {{ item.total }} câu
+                        </p>
+
+                        <div class="knowledge-comment">
+                            {% if item.percentage >= 80 %}
+                                Xuất sắc
+                            {% elif item.percentage >= 60 %}
+                                Tốt
+                            {% elif item.percentage >= 40 %}
+                                Cần luyện tập thêm
+                            {% else %}
+                                Cần cố gắng
+                            {% endif %}
+                        </div>
+
+</div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+             
+
+            {% endif %}
+
+
+            <!-- BUTTON -->
+            <div class="knowledge-footer">
+
+                <a href="/knowledge-ai"
+                   class="back-button">
+
+                    Nhận xét kiến thức
+
+                </a>
+
+
+                <a href="/"
+                   class="back-button">
+
+                    Tạo bài kiểm tra mới
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
